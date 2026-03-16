@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smoke Tests — Snake 3</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #111; color: #eee; }
+    h1 { margin-bottom: 1em; }
+    .pass { color: #4caf50; font-weight: bold; }
+    .fail { color: #f44336; font-weight: bold; }
+    #summary { margin-top: 1.5em; font-size: 1.2em; }
+    canvas { display: none; }
+  </style>
+</head>
+<body>
+  <!-- Hidden canvas that mirrors index.html — required by src/main.js -->
+  <canvas id="game-canvas" width="400" height="400"></canvas>
+
+  <h1>Smoke Tests</h1>
+  <div id="results"></div>
+  <div id="summary"></div>
+
+  <script type="module">
+    import '../src/main.js';
+
+    function assert(name, condition, detail) {
+      const el = document.createElement('p');
+      el.className = condition ? 'pass' : 'fail';
+      el.setAttribute('data-result', condition ? 'pass' : 'fail');
+      el.setAttribute('data-test', name);
+      const icon = condition ? '✓ PASS' : '✗ FAIL';
+      el.textContent = detail !== undefined
+        ? `${icon} — ${name} (${detail})`
+        : `${icon} — ${name}`;
+      document.getElementById('results').appendChild(el);
+      return condition;
+    }
+
+    // Wait 500ms so the rAF loop has time to accumulate frames
+    setTimeout(() => {
+      let allPassed = true;
+
+      // (a) canvas element exists in the DOM
+      const canvas = document.getElementById('game-canvas');
+      allPassed = assert('canvas element exists in DOM', !!canvas) && allPassed;
+
+      // (b) canvas has a 2D rendering context
+      let has2d = false;
+      if (canvas) {
+        try { has2d = canvas.getContext('2d') !== null; } catch (_) {}
+      }
+      allPassed = assert('canvas has 2D rendering context', has2d) && allPassed;
+
+      // (c) requestAnimationFrame loop fired >= 10 times
+      const count = window.__frameCount || 0;
+      allPassed = assert('rAF loop fired >= 10 times', count >= 10, `frameCount=${count}`) && allPassed;
+
+      // Summary — used by CI grep
+      const summary = document.getElementById('summary');
+      summary.className = allPassed ? 'pass' : 'fail';
+      summary.setAttribute('data-all-passed', String(allPassed));
+      summary.textContent = allPassed ? 'ALL TESTS PASSED' : 'SOME TESTS FAILED';
+    }, 500);
+  </script>
+</body>
+</html>

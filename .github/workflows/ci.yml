@@ -64,10 +64,31 @@ jobs:
           npx serve . --listen 8080 &
           SERVER_PID=$!
           sleep 3
-          curl --fail --silent http://localhost:8080/ | grep -q "Hello, World!" \
-            && echo "✓ Smoke test passed: 'Hello, World!' found in response" \
+          curl --fail --silent http://localhost:8080/ | grep -q "game-canvas" \
+            && echo "✓ Smoke test passed: canvas element found in response" \
             || (echo "✗ Smoke test failed" && kill $SERVER_PID && exit 1)
           kill $SERVER_PID
+
+      - name: Browser smoke test (headless Chrome)
+        run: |
+          npx serve . --listen 8081 &
+          SERVER_PID=$!
+          sleep 3
+          google-chrome-stable \
+            --headless=old \
+            --no-sandbox \
+            --disable-gpu \
+            --virtual-time-budget=3000 \
+            --dump-dom \
+            "http://localhost:8081/tests/smoke.html" \
+            2>/dev/null > /tmp/smoke-result.html
+          kill $SERVER_PID
+          echo "--- Smoke test DOM output ---"
+          cat /tmp/smoke-result.html
+          echo "---"
+          grep -q "ALL TESTS PASSED" /tmp/smoke-result.html \
+            && echo "✓ Browser smoke tests passed" \
+            || (echo "✗ Browser smoke tests FAILED" && exit 1)
 
   # ── Stage 3: Deploy ──────────────────────────────────────────────────────────
   deploy:

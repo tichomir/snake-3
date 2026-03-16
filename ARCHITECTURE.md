@@ -1,48 +1,47 @@
-# Hello World — Architecture Design Note
+# Snake 3 — Architecture Overview
 
-## File Structure
+## Folder Structure
 
 ```
-index.html   — entry point; HTML skeleton
-style.css    — presentation layer (separated for clarity and cacheability)
-main.js      — behaviour layer (minimal; logs to console)
+/
+├── index.html          # Shell: canvas element + script tag
+├── main.js             # Entry point: canvas init + game loop
+├── style.css           # Minimal canvas centering styles
+├── src/                # Game logic modules (ES Modules)
+│   ├── game.js         # Snake state, food, collision, scoring
+│   ├── renderer.js     # Canvas 2D drawing (grid, snake, food, HUD)
+│   ├── input.js        # Keyboard listener → direction queue
+│   └── constants.js    # Grid size, tick rate, colours
+├── assets/             # Sprites and sounds (reserved; empty at project start)
+├── tests/              # Unit tests
+├── docs/               # Architecture decision records
+│   └── adr-001-architecture.md
+├── ARCHITECTURE.md     # This file
+└── CLAUDE.md           # Project intelligence (sprint history)
 ```
 
-Keeping HTML, CSS, and JS in separate files follows the single-responsibility
-principle and makes each concern independently testable/replaceable, even at
-this trivial scale.
+## Key Architectural Decisions
 
-## Static vs Served
+| Decision | Choice | Detail |
+|----------|--------|--------|
+| Runtime dependencies | None | Vanilla JS only — no framework, no bundler |
+| Rendering | Canvas 2D API | `fillRect` per grid cell; immediate-mode draw |
+| Game loop | `requestAnimationFrame` + fixed timestep | Decouples snake speed from frame rate |
+| Module system | ES Modules (`import`/`export`) | No bundler required; works via `file://` or `npx serve` |
+| Build step | None | Files are deploy-ready as-is |
+| Dev server | Optional (`npx serve .`) | Only needed if browser blocks `file://` ES module imports |
 
-**Decision: plain static files, no build step or server process.**
+## Architecture Decision Records
 
-Rationale:
-- A Hello World app has zero dynamic requirements.
-- Any browser can open `index.html` directly (`file://`) without a server.
-- For CI/CD preview/deploy a static host (GitHub Pages, Netlify, S3) is
-  sufficient and has no runtime attack surface.
-- A server process would add complexity (Node/Python version pinning, port
-  management) with no benefit at this scope.
+- [ADR-001 — No-Dependency, Canvas-Based Architecture](docs/adr-001-architecture.md)
 
-If the project grows to require API calls or server-side rendering, introduce
-a lightweight dev server (e.g. `npx serve` or Vite) at that point.
+## Dev Setup
 
-## CI/CD Pipeline Stages
+```bash
+# No install required — open directly:
+open index.html
 
-| Stage   | Tool / Command            | Purpose                                      |
-|---------|---------------------------|----------------------------------------------|
-| Lint    | `npx htmlhint index.html` | Catch malformed HTML                         |
-| Test    | `npx jest` (or none yet)  | Unit/integration tests (placeholder for now) |
-| Build   | _none required_           | No compilation; files are deploy-ready as-is |
-| Deploy  | Upload to static host     | Push `index.html`, `style.css`, `main.js`    |
-
-For the initial workflow validation, the pipeline simply verifies the files
-are present and well-formed, then deploys to the static host.
-
-## Assumptions
-
-- No package manager or bundler is introduced until there is a concrete need.
-- The `test` stage is listed as a future hook; no tests exist yet for a
-  three-line app.
-- All pipeline tooling versions will be pinned in CI config (e.g.
-  `.github/workflows/ci.yml`) when that stage is added.
+# If ES module imports are blocked on file://:
+npx serve .
+# then visit http://localhost:3000
+```
