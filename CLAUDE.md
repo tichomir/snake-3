@@ -44,3 +44,22 @@ Deliverables:
 - ✅ Fix: Complete README dev setup instructions — Devops Engineer (◈ Standard, 3 SP)
 
 ---
+### Sprint 3 | 2026-03-16 | ✅ done | 18 SP
+**Goal:** [Phase: Core Gameplay Engine]
+Implement the fundamental game mechanics including the grid model, snake data structure, continuous movement, direction control with reverse-prevention, collision detection for walls and self, and food spawning on unoccupied cells.
+
+Deliverables:
+- 20x20 grid model with cell state management
+- Snake initialisation at centre (length 3) with continuous movement
+- Arrow key and WASD input handler with reverse-direction guard
+- Food spawning logic targeting a random unoccupied cell
+- Wall and self-collision detection triggering game-over state
+- Unit tests covering movement, collision, and food placement edge cases
+
+**Delivered:**
+- ✅ Design grid model and snake data structures — Software Architect (⚡ Quick, 2 SP)
+- ✅ Implement core gameplay engine: grid, snake, movement, input, food, and collision — Frontend Developer (◉ Deep, 8 SP)
+- ✅ Write unit tests for movement, collision, and food placement — Qa Engineer (◉ Deep, 5 SP)
+- ✅ Fix: Complete adr-002-game-data-structures.md content — Software Architect (◈ Standard, 3 SP)
+
+---

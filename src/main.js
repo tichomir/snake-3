@@ -1,17 +1,28 @@
+import { state, tick }    from './game.js';
+import { render as draw } from './renderer.js';
+import { bindInput }      from './input.js';
+import { TICK_MS }        from './constants.js';
+
 const canvas = document.getElementById('game-canvas');
-const ctx = canvas.getContext('2d');
+const ctx    = canvas.getContext('2d');
 
 window.__frameCount = 0;
-let lastTime = 0;
+let lastTime    = 0;
+let accumulated = 0;
+
+bindInput();
 
 function update(delta) {
-  // Game state update logic goes here
-  // delta: milliseconds since last frame
+  if (state.phase !== 'playing') return;
+  accumulated += delta;
+  while (accumulated >= TICK_MS) {
+    tick();
+    accumulated -= TICK_MS;
+  }
 }
 
 function render() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // Drawing logic goes here
+  draw(ctx, state);
 }
 
 function loop(timestamp) {
