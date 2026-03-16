@@ -82,3 +82,20 @@ Deliverables:
 - ✅ Fix: scoring test file was created but never executed or verified — Qa Engineer (◈ Standard, 3 SP)
 
 ---
+### Sprint 5 | 2026-03-16 | ✅ done | 13 SP
+**Goal:** [Phase: Game States & UI]
+Build all four game states — Start, Playing, Paused, and Game Over — with appropriate screens, transitions, and a state machine. Implement pause toggling, Game Over high score comparison, and Play Again restart without a page reload.
+
+Deliverables:
+- Start screen with title, high score display, and Start Game button
+- Paused overlay with Resume button and P-key toggle
+- Game Over screen showing final score, high score, congratulatory message on new record, and Play Again button
+- State machine managing transitions between all four game states
+- Keyboard-navigable UI elements meeting WCAG AA colour contrast ratios
+
+**Delivered:**
+- ✅ Design game state machine architecture — Software Architect (⚡ Quick, 2 SP)
+- ✅ Implement game state machine and Start/Paused/Game Over screens — Frontend Developer (◉ Deep, 8 SP)
+- ✅ Write integration and unit tests for state machine and UI screens — Qa Engineer (◈ Standard, 3 SP)
+
+---

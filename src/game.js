@@ -20,17 +20,35 @@ export const state = {
     { x: 10, y: 10 },  // body
     { x:  9, y: 10 },  // tail
   ],
-  direction:     DIRECTION.RIGHT,
-  nextDirection: null,
-  food:          null,
-  pendingGrow:   false,
-  score:         0,
-  foodEaten:     0,
-  highScore:     loadHighScore(),
-  phase:         'playing',  // 'playing' | 'over' | 'won'
+  direction:       DIRECTION.RIGHT,
+  nextDirection:   null,
+  food:            null,
+  pendingGrow:     false,
+  score:           0,
+  foodEaten:       0,
+  highScore:       loadHighScore(),
+  newHighScoreSet: false,
+  phase:           'playing',  // 'playing' | 'over' | 'won'
 };
 
 state.food = spawnFood(state.snake);
+
+export function resetGame() {
+  state.snake = [
+    { x: 11, y: 10 },
+    { x: 10, y: 10 },
+    { x:  9, y: 10 },
+  ];
+  state.direction       = DIRECTION.RIGHT;
+  state.nextDirection   = null;
+  state.pendingGrow     = false;
+  state.score           = 0;
+  state.foodEaten       = 0;
+  state.highScore       = loadHighScore();
+  state.newHighScoreSet = false;
+  state.phase           = 'playing';
+  state.food            = spawnFood(state.snake);
+}
 
 export function tick() {
   if (state.phase !== 'playing') return;
@@ -77,6 +95,7 @@ export function tick() {
     state.foodEaten += 1;
     if (state.score > state.highScore) {
       state.highScore = state.score;
+      state.newHighScoreSet = true;
       saveHighScore(state.highScore);
     }
     const newFood = spawnFood(state.snake);

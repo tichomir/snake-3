@@ -16,8 +16,35 @@ const KEY_MAP = {
   D: DIRECTION.RIGHT,
 };
 
-export function bindInput() {
+/**
+ * Bind keyboard input.
+ * @param {object} handlers
+ * @param {function} [handlers.onPauseToggle]  Called when P is pressed
+ * @param {function} [handlers.onActivate]     Called when Enter or Space is pressed
+ * @param {function} [handlers.onNextFocus]    Called when Tab is pressed
+ */
+export function bindInput(handlers = {}) {
+  const { onPauseToggle, onActivate, onNextFocus } = handlers;
+
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'p' || e.key === 'P') {
+      if (onPauseToggle) onPauseToggle();
+      return;
+    }
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (onActivate) onActivate();
+      return;
+    }
+
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      if (onNextFocus) onNextFocus();
+      return;
+    }
+
+    // Direction keys — only act during gameplay
     const newDir = KEY_MAP[e.key];
     if (!newDir) return;
 
