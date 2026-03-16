@@ -1,0 +1,7 @@
+
+# PersonaForge sprint context (auto-generated, safe to delete)
+.persona-snapshot.md
+
+# Node
+node_modules/
+package-lock.json

@@ -1,0 +1,13 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background: #f0f4f8;
+}
+
+h1 {
+  color: #1a202c;
+}

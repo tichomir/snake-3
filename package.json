@@ -1,0 +1,14 @@
+{
+  "name": "test6",
+  "version": "1.0.0",
+  "description": "Hello World static app",
+  "scripts": {
+    "lint": "htmlhint index.html",
+    "test": "node smoke.test.js",
+    "test:syntax": "node --check main.js"
+  },
+  "devDependencies": {
+    "htmlhint": "^1.1.4",
+    "serve": "^14.2.4"
+  }
+}
