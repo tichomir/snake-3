@@ -63,3 +63,22 @@ Deliverables:
 - ✅ Fix: Complete adr-002-game-data-structures.md content — Software Architect (◈ Standard, 3 SP)
 
 ---
+### Sprint 4 | 2026-03-16 | ✅ done | 16 SP
+**Goal:** [Phase: Scoring & Progression]
+Implement the scoring system including base points per food eaten, speed-bonus multipliers tied to progression tiers, progressive speed increases every 5 food items consumed, and localStorage persistence for high score across sessions.
+
+Deliverables:
+- Score calculation: 10pts x multiplier (x1.0 / x1.5 / x2.0) based on current speed tier
+- Speed increment logic triggered every 5 food items eaten
+- localStorage read/write for high score persistence
+- Score and high score display rendered during active gameplay
+- Unit tests for scoring logic and speed-tier transition edge cases
+
+**Delivered:**
+- ✅ Design scoring system and speed-tier architecture — Software Architect (⚡ Quick, 2 SP)
+- ✅ Implement scoring, speed-tier progression, and localStorage persistence — Frontend Developer (◉ Deep, 5 SP)
+- ✅ Write unit tests for scoring logic and speed-tier edge cases — Qa Engineer (◈ Standard, 3 SP)
+- ✅ Fix: Complete scoring system and speed-tier architecture design — Software Architect (◈ Standard, 3 SP)
+- ✅ Fix: scoring test file was created but never executed or verified — Qa Engineer (◈ Standard, 3 SP)
+
+---

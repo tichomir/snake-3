@@ -6,6 +6,7 @@
     "lint": "htmlhint index.html",
     "test": "node smoke.test.js",
     "test:game": "node tests/game.test.mjs",
+    "test:scoring": "node tests/scoring.test.mjs",
     "test:syntax": "node --check main.js"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 import { state, tick }    from './game.js';
 import { render as draw } from './renderer.js';
 import { bindInput }      from './input.js';
-import { TICK_MS }        from './constants.js';
+import { getTickMs }      from './scoring.js';
 
 const canvas = document.getElementById('game-canvas');
 const ctx    = canvas.getContext('2d');
@@ -15,9 +15,10 @@ bindInput();
 function update(delta) {
   if (state.phase !== 'playing') return;
   accumulated += delta;
-  while (accumulated >= TICK_MS) {
+  const tickMs = getTickMs(state.foodEaten);
+  while (accumulated >= tickMs) {
     tick();
-    accumulated -= TICK_MS;
+    accumulated -= tickMs;
   }
 }
 

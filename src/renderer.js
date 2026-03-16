@@ -1,4 +1,5 @@
 import { GRID_COLS, GRID_ROWS, CELL_SIZE } from './constants.js';
+import { getScoreMultiplier } from './scoring.js';
 
 const W = GRID_COLS * CELL_SIZE;
 const H = GRID_ROWS * CELL_SIZE;

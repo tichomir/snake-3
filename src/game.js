@@ -1,4 +1,5 @@
 import { DIRECTION, GRID_COLS, GRID_ROWS } from './constants.js';
+import { getPointsForFood, loadHighScore, saveHighScore } from './scoring.js';
 
 function spawnFood(snake) {
   const occupied = new Set(snake.map(s => `${s.x},${s.y}`));
@@ -24,6 +25,8 @@ export const state = {
   food:          null,
   pendingGrow:   false,
   score:         0,
+  foodEaten:     0,
+  highScore:     loadHighScore(),
   phase:         'playing',  // 'playing' | 'over' | 'won'
 };
 
@@ -70,7 +73,12 @@ export function tick() {
   // 7. Food check
   if (newHead.x === state.food.x && newHead.y === state.food.y) {
     state.pendingGrow = true;
-    state.score += 1;
+    state.score += getPointsForFood(state.foodEaten);
+    state.foodEaten += 1;
+    if (state.score > state.highScore) {
+      state.highScore = state.score;
+      saveHighScore(state.highScore);
+    }
     const newFood = spawnFood(state.snake);
     if (newFood === null) {
       state.phase = 'won';
