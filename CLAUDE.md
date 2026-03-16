@@ -122,3 +122,26 @@ Deliverables:
 - ✅ Fix: touch swipe gesture handler missing or not wired in input.js — Frontend Developer (◈ Standard, 3 SP)
 
 ---
+### Sprint 7 | 2026-03-16 | ✅ done | 30 SP
+**Goal:** [Phase: Testing & Release]
+Conduct end-to-end functional testing across all target browsers, perform an accessibility audit, run performance regression checks, resolve identified bugs, and produce a production-ready minified single-folder build with complete documentation.
+
+Deliverables:
+- Cross-browser test report covering Chrome, Firefox, Safari, and Edge (latest 2 versions each)
+- Accessibility audit report confirming WCAG AA keyboard navigation and colour contrast compliance
+- Resolved bug list from the testing phase with severity classification
+- Minified, single-folder production build requiring no build tool for end users
+- Final README with gameplay instructions and embedding guide for the developer persona
+
+**Delivered:**
+- ✅ Define cross-browser and accessibility test plan — Software Architect (⚡ Quick, 2 SP)
+- ✅ Execute cross-browser functional tests, accessibility audit, and performance regression; produce reports — Qa Engineer (◉ Deep, 5 SP)
+- ✅ Resolve bugs identified during testing phase — Frontend Developer (◉ Deep, 5 SP)
+- ✅ Produce minified single-folder production build and final README — Devops Engineer (◈ Standard, 3 SP)
+- ✅ Fix: Incomplete cross-browser functional tests, accessibility audit, and performance regression reports — Qa Engineer (◈ Standard, 3 SP)
+- ✅ Fix: Missing aria role and keyboard instructions on canvas element — Developer (◈ Standard, 3 SP)
+- ✅ Fix: unresolved cross-browser functional test failures (F-01–F-46) — Frontend Developer (◈ Standard, 3 SP)
+- ✅ Fix: accessibility audit failures against WCAG 2.1 AA — Frontend Developer (◈ Standard, 3 SP)
+- ✅ Fix: performance regressions identified in performance-regression-report.md — Frontend Developer (◈ Standard, 3 SP)
+
+---

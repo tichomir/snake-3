@@ -21,20 +21,20 @@ test('index.html exists', () => {
   assert.ok(fs.existsSync(path.join(root, 'index.html')), 'index.html not found');
 });
 
-test("index.html contains <h1>Hello, World!</h1>", () => {
-  assert.ok(html.includes('<h1>Hello, World!</h1>'), 'H1 text not found in index.html');
+test('index.html contains canvas element with id="game-canvas"', () => {
+  assert.ok(html.includes('id="game-canvas"'), 'canvas#game-canvas not found in index.html');
 });
 
-test('style.css is linked in index.html', () => {
-  assert.ok(html.includes('href="style.css"'), 'style.css link not found in index.html');
+test('index.html loads game module (src/main.js)', () => {
+  assert.ok(html.includes('src="src/main.js"'), 'src/main.js module script not found in index.html');
 });
 
 test('style.css file exists', () => {
   assert.ok(fs.existsSync(path.join(root, 'style.css')), 'style.css not found');
 });
 
-test('main.js is referenced in index.html', () => {
-  assert.ok(html.includes('src="main.js"'), 'main.js script tag not found in index.html');
+test('src/main.js is referenced in index.html', () => {
+  assert.ok(html.includes('src="src/main.js"'), 'src/main.js script tag not found in index.html');
 });
 
 test('main.js file exists', () => {

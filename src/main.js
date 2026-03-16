@@ -5,8 +5,14 @@ import { getTickMs }                      from './scoring.js';
 import { GameStateMachine, GAME_STATE }   from './stateMachine.js';
 import { DIRECTION }                      from './constants.js';
 
-const canvas = document.getElementById('game-canvas');
-const ctx    = canvas.getContext('2d');
+const canvas      = document.getElementById('game-canvas');
+const ctx         = canvas.getContext('2d');
+
+// Accessibility: semantic SR-only buttons and live region (Bugs A-02, A-03)
+const btnStart     = document.getElementById('btn-start');
+const btnResume    = document.getElementById('btn-resume');
+const btnPlayAgain = document.getElementById('btn-play-again');
+const gameStatus   = document.getElementById('game-status');
 
 const sm = new GameStateMachine();
 
@@ -118,7 +124,10 @@ function onResume() {
 
 function onPlayAgain() {
   if (sm.current !== GAME_STATE.GAME_OVER) return;
-  sm.restart();
+  resetGame();
+  accumulated = 0;
+  sm.restart();      // GAME_OVER → START
+  sm.startGame();    // START → PLAYING
   focusedButton = 0;
 }
 

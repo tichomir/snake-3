@@ -76,6 +76,7 @@ export function bindInput(handlers = {}) {
     }
 
     if (e.key === 'Tab') {
+      if (e.shiftKey) return; // allow Shift+Tab to move focus out of the canvas
       e.preventDefault();
       if (onNextFocus) onNextFocus();
       return;
