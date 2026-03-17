@@ -164,3 +164,9 @@ index.html:47  GET file:///Users/t.hadzhiev/coding/test6/src/main.js net::ERR_FA
 **Delivered:**
 
 ---
+### Sprint 9 | 2026-03-17 | ✅ done | 0 SP
+**Goal:** Add configuration and ability to change colors
+
+**Delivered:**
+
+---
