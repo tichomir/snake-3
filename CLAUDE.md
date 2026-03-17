@@ -170,3 +170,15 @@ index.html:47  GET file:///Users/t.hadzhiev/coding/test6/src/main.js net::ERR_FA
 **Delivered:**
 
 ---
+### Sprint 10 — Configuration & Color Theming | 2026-03-17 | ✅ done | 19 SP
+**Goal:** Let's add configuration capabilities and add config to change the colors.
+
+**Delivered:**
+- ✅ Design configuration architecture and color theming schema — Software Architect (⚡ Quick, 2 SP)
+- ✅ Implement config.js with default color palette and runtime override support — Frontend Developer (◈ Standard, 3 SP)
+- ✅ Build in-game color settings UI panel — Frontend Developer (◉ Deep, 5 SP)
+- ✅ QA: verify config system and color settings panel end-to-end — Qa Engineer (◈ Standard, 3 SP)
+- ✅ Fix: Complete configuration architecture and color theming ADR — Software Architect (◈ Standard, 3 SP)
+- ✅ Fix: Complete config.js integration into renderer.js — Frontend Developer (◈ Standard, 3 SP)
+
+---

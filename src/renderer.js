@@ -1,27 +1,8 @@
 import { GRID_COLS, GRID_ROWS, CELL_SIZE } from './constants.js';
+import { getConfig } from './config.js';
 
 const W = GRID_COLS * CELL_SIZE;  // 400
 const H = GRID_ROWS * CELL_SIZE;  // 400
-
-// ---------------------------------------------------------------------------
-// Named colour constants
-// All non-text colours verified ≥3:1 against their background (WCAG AA for
-// graphical elements); text colours verified ≥4.5:1 (WCAG AA for text).
-// ---------------------------------------------------------------------------
-const COLORS = {
-  background:  '#1a1a2e',   // solid fill for non-game screens
-  gridLight:   '#1e1e38',   // checkerboard light cell  (~3.4:1 vs snake body)
-  gridDark:    '#161628',   // checkerboard dark cell   — subtle two-tone effect
-  snake:       '#4ecca3',   // body segments (#4ecca3 on grid: ~10:1 — WCAG AA ✓)
-  snakeHead:   '#f5a623',   // head amber   (#f5a623 on grid:  ~7.7:1 — WCAG AA ✓)
-  snakeEye:    '#0a0a1a',   // eye dots on head
-  food:        '#e94560',   // food accent  (#e94560 on grid:  ~4.7:1 — WCAG AA ✓)
-  text:        '#ffffff',   // HUD / overlay text (#fff on dark: ~15.9:1 — WCAG AA ✓)
-  overlay:     'rgba(0,0,0,0.75)',
-  button:      '#4ecca3',
-  buttonText:  '#0a0a1a',   // (#0a0a1a on teal/amber: >9:1 — WCAG AA ✓)
-  buttonFocus: '#f5a623',
-};
 
 // ---------------------------------------------------------------------------
 // Named size constants — no magic numbers in drawing code
@@ -74,11 +55,11 @@ function drawSnakeHead(ctx, head, direction) {
   const sz = CELL_SIZE - CELL_INSET * 2;
 
   // Head fill
-  ctx.fillStyle = COLORS.snakeHead;
+  ctx.fillStyle = getConfig().snakeHead;
   fillRoundRect(ctx, px, py, sz, sz, HEAD_RADIUS);
 
   // Eye positions depend on direction so they always face forward
-  ctx.fillStyle = COLORS.snakeEye;
+  ctx.fillStyle = getConfig().snakeEye;
   const edgeFwd = sz * 0.72;  // distance from back edge toward the facing edge
   const eyeOff  = sz * 0.28;  // lateral offset from centre line
 
@@ -107,11 +88,11 @@ function drawSnakeHead(ctx, head, direction) {
 
 function drawButton(ctx, btn, label, focused) {
   // Button fill — teal normally, amber when focused (both contrast >9:1 on dark bg)
-  ctx.fillStyle = focused ? COLORS.buttonFocus : COLORS.button;
+  ctx.fillStyle = focused ? getConfig().buttonFocus : getConfig().button;
   ctx.fillRect(btn.x, btn.y, btn.w, btn.h);
 
   // Button label (#0a0a1a on teal/amber: contrast >9:1 — WCAG AA ✓)
-  ctx.fillStyle    = COLORS.buttonText;
+  ctx.fillStyle    = getConfig().buttonText;
   ctx.font         = 'bold 16px monospace';
   ctx.textAlign    = 'center';
   ctx.textBaseline = 'middle';
@@ -130,14 +111,14 @@ function renderGameBoard(ctx, state) {
   // Alternating two-shade checkerboard grid background
   for (let row = 0; row < GRID_ROWS; row++) {
     for (let col = 0; col < GRID_COLS; col++) {
-      ctx.fillStyle = (row + col) % 2 === 0 ? COLORS.gridLight : COLORS.gridDark;
+      ctx.fillStyle = (row + col) % 2 === 0 ? getConfig().gridLight : getConfig().gridDark;
       ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
     }
   }
 
   // Food — filled circle with accent colour
   if (state.food) {
-    ctx.fillStyle = COLORS.food;
+    ctx.fillStyle = getConfig().food;
     ctx.beginPath();
     ctx.arc(
       state.food.x * CELL_SIZE + CELL_SIZE / 2,
@@ -149,7 +130,7 @@ function renderGameBoard(ctx, state) {
   }
 
   // Snake body segments (index 1+) — rounded rectangles in snake-body colour
-  ctx.fillStyle = COLORS.snake;
+  ctx.fillStyle = getConfig().snake;
   for (let i = 1; i < state.snake.length; i++) {
     const seg = state.snake[i];
     fillRoundRect(
@@ -168,7 +149,7 @@ function renderGameBoard(ctx, state) {
   }
 
   // Score HUD (#ffffff on grid: contrast ~15.9:1 — WCAG AA ✓)
-  ctx.fillStyle    = COLORS.text;
+  ctx.fillStyle    = getConfig().text;
   ctx.font         = '14px monospace';
   ctx.textAlign    = 'left';
   ctx.textBaseline = 'alphabetic';
@@ -176,18 +157,19 @@ function renderGameBoard(ctx, state) {
 }
 
 function renderStartScreen(ctx, highScore, focusedButton) {
-  ctx.fillStyle = COLORS.background;
+  const C = getConfig();
+  ctx.fillStyle = C.background;
   ctx.fillRect(0, 0, W, H);
 
   // Title (#4ecca3 on #1a1a2e: contrast ~9.5:1 — WCAG AA ✓)
-  ctx.fillStyle    = COLORS.snake;
+  ctx.fillStyle    = C.snake;
   ctx.font         = 'bold 56px monospace';
   ctx.textAlign    = 'center';
   ctx.textBaseline = 'alphabetic';
   ctx.fillText('SNAKE', W / 2, 110);
 
   // Subtitle (#ffffff on #1a1a2e: WCAG AA ✓)
-  ctx.fillStyle = COLORS.text;
+  ctx.fillStyle = C.text;
   ctx.font      = '14px monospace';
   ctx.fillText('Arrow keys or WASD to move  •  P to pause', W / 2, 148);
 
@@ -199,12 +181,13 @@ function renderStartScreen(ctx, highScore, focusedButton) {
 }
 
 function renderPausedOverlay(ctx, focusedButton) {
+  const C = getConfig();
   // Semi-transparent overlay preserves the frozen game board below
-  ctx.fillStyle = COLORS.overlay;
+  ctx.fillStyle = C.overlay;
   ctx.fillRect(0, 0, W, H);
 
   // "PAUSED" (#ffffff on effective dark: WCAG AA ✓)
-  ctx.fillStyle    = COLORS.text;
+  ctx.fillStyle    = C.text;
   ctx.font         = 'bold 36px monospace';
   ctx.textAlign    = 'center';
   ctx.textBaseline = 'alphabetic';
@@ -217,10 +200,11 @@ function renderPausedOverlay(ctx, focusedButton) {
 }
 
 function renderGameOverScreen(ctx, state, focusedButton) {
-  ctx.fillStyle = COLORS.overlay;
+  const C = getConfig();
+  ctx.fillStyle = C.overlay;
   ctx.fillRect(0, 0, W, H);
 
-  ctx.fillStyle    = COLORS.text;
+  ctx.fillStyle    = C.text;
   ctx.font         = 'bold 32px monospace';
   ctx.textAlign    = 'center';
   ctx.textBaseline = 'alphabetic';
@@ -232,7 +216,7 @@ function renderGameOverScreen(ctx, state, focusedButton) {
 
   if (state.newHighScoreSet) {
     // Amber highlight for new record (#f5a623 on dark overlay: contrast >6:1 — WCAG AA ✓)
-    ctx.fillStyle = COLORS.snakeHead;
+    ctx.fillStyle = C.snakeHead;
     ctx.font      = 'bold 18px monospace';
     ctx.fillText('NEW HIGH SCORE!', W / 2, 238);
   }
