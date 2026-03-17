@@ -41,19 +41,30 @@ npm install
 
 ## Running Locally
 
-No build step and no local server required.
+> **Important:** The game uses ES modules (`<script type="module">`). Browsers block
+> ES module imports over the `file://` protocol (CORS policy). You **must** serve the
+> project over HTTP — double-clicking `index.html` will not work.
 
-**Option A — open directly (simplest):**
-
-1. Open `index.html` in your browser:
-   - Double-click the file in your file manager, **or**
-   - Navigate to `file:///path/to/the-snake/index.html` in the address bar.
-
-**Option B — use the bundled dev server:**
+**Option A — npm serve script (recommended):**
 
 ```bash
-npx serve .
-# Then open http://localhost:3000 in your browser
+npm install          # only needed once
+npm run serve
+# Open http://localhost:8080 in your browser
+```
+
+**Option B — Python (no npm required):**
+
+```bash
+python3 -m http.server 8080
+# Open http://localhost:8080 in your browser
+```
+
+**Option C — npx serve (no local install):**
+
+```bash
+npx serve . -p 8080
+# Open http://localhost:8080 in your browser
 ```
 
 The game starts immediately on page load.

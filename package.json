@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Hello World static app",
   "scripts": {
+    "serve": "serve . -p 8080",
     "lint": "htmlhint index.html",
     "test": "node smoke.test.js",
     "test:game": "node tests/game.test.mjs",

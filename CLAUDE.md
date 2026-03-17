@@ -145,3 +145,16 @@ Deliverables:
 - ✅ Fix: performance regressions identified in performance-regression-report.md — Frontend Developer (◈ Standard, 3 SP)
 
 ---
+### Sprint 8 — CORS Bug Investigation | 2026-03-17 | ✅ done | 5 SP
+**Goal:** Investigate bugs, as I can't actually access the MVP. 
+
+Here are the console outputs from the browser
+
+index.html:1 Access to script at 'file:///Users/t.hadzhiev/coding/test6/src/main.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome, chrome-extension, chrome-untrusted, data, http, https, isolated-app.Understand this error
+index.html:47  GET file:///Users/t.hadzhiev/coding/test6/src/main.js net::ERR_FAILED
+
+**Delivered:**
+- ✅ Diagnose and fix CORS/file-protocol loading failure — Devops Engineer (◈ Standard, 3 SP)
+- ✅ Verify game loads and is fully playable after fix — Qa Engineer (⚡ Quick, 2 SP)
+
+---
